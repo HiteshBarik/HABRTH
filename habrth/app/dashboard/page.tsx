@@ -3,11 +3,13 @@
 import Link from "next/link";
 import { useSelector } from "react-redux";
 import type { RootState } from "@/store/store";
+import DashboardLayout from "@/components/layout/DashboardLayout";
 
 export default function DashboardPage() {
   const user = useSelector((state: RootState) => state.auth.user);
 
   return (
+    <DashboardLayout>
     <main className="mx-auto flex min-h-[70vh] w-full max-w-4xl flex-col justify-center gap-6">
       <div>
         <p className="text-xs uppercase tracking-[0.35em] text-zinc-500">
@@ -42,5 +44,6 @@ export default function DashboardPage() {
         Return home
       </Link>
     </main>
+    </DashboardLayout>
   );
 }

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ReduxProvider from "@/components/ReduxProvider";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,17 +28,19 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col text-white">
         <main
-          className="min-h-screen px-4 py-12 text-white"
+          className="min-h-full"
           style={{
             backgroundImage:
               "radial-gradient(circle at top, rgba(255,255,255,0.08), transparent 30%), linear-gradient(180deg, #050505 0%, #000 100%)",
           }}
         >
-          <ReduxProvider>{children}</ReduxProvider>
+          <TooltipProvider>
+            <ReduxProvider>{children}</ReduxProvider>
+          </TooltipProvider>
         </main>
       </body>
     </html>
