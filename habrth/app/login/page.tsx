@@ -75,7 +75,7 @@ function LoginForm() {
       dispatch(
         setCredentials({
           user: result.data.user ?? null,
-          token: result.data.token ?? null,
+          token: null,
         }),
       );
 
