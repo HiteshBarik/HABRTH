@@ -37,9 +37,10 @@ const Navbar = (_props: Props) => {
   };
 
   const handleLogout = () => {
-    // Clear auth state and redirect
-    localStorage.removeItem("token");
-    router.push("/login");
+    // Clear persisted auth data and force a full reload so in-memory auth state is reset
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("authUser");
+    window.location.replace("/login");
   };
 
   return (
