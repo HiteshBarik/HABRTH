@@ -72,10 +72,22 @@ export async function POST(request: Request) {
       expiresIn: "7d",
     });
 
-    return NextResponse.json(
-      { success: true, token, user: safeUser },
+    const response = NextResponse.json(
+      { success: true, user: safeUser },
       { status: 201 },
     );
+
+    response.cookies.set({
+      name: "authToken",
+      value: token,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+      maxAge: 60 * 60 * 24 * 7,
+    });
+
+    return response;
   } catch (error) {
     if (
       typeof error === "object" &&

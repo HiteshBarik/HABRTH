@@ -139,17 +139,6 @@ function SignupForm() {
         }),
       );
 
-      if (result.data.token) {
-        window.localStorage.setItem("authToken", result.data.token);
-      }
-
-      if (result.data.user) {
-        window.localStorage.setItem(
-          "authUser",
-          JSON.stringify(result.data.user),
-        );
-      }
-
       router.push("/dashboard");
     } catch {
       setSubmitError("Something went wrong while creating your account.");
