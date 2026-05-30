@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import { SidebarTrigger } from "../ui/sidebar";
 import { Button } from "../ui/button";
@@ -22,6 +22,7 @@ type Props = {};
 
 const Navbar = (_props: Props) => {
   const router = useRouter();
+  const pathname = usePathname();
   const user = useSelector((state: RootState) => state.auth.user);
 
   const userName = user?.name?.trim() || "User Name";
@@ -44,24 +45,32 @@ const Navbar = (_props: Props) => {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-30 flex h-16 items-center justify-between border-b border-white/10 bg-black/50 px-3 backdrop-blur-md md:px-6">
+    <header className="fixed top-0 left-0 right-0 z-30 flex h-16 items-center justify-between border-b border-white/10 bg-[linear-gradient(180deg,rgba(12,12,12,0.82)_0%,rgba(5,5,5,0.64)_100%)] px-3 backdrop-blur-2xl md:px-6">
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-linear-to-r from-transparent via-white/30 to-transparent" />
+
       {/* Left side - Sidebar trigger (mobile) and logo */}
       <div className="flex items-center gap-4">
         <SidebarTrigger className="text-white hover:bg-white/10 md:hidden" />
-        <p className="text-sm font-medium tracking-widest text-zinc-200 uppercase">
+        <p className="text-xs font-medium tracking-[0.3em] text-zinc-200 uppercase">
           HABRTH
         </p>
       </div>
 
       {/* Center - Menu items (desktop only) */}
-      <div className="hidden md:flex items-center gap-8">
+      <div className="hidden items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-2 py-1.5 shadow-[0_12px_48px_rgba(0,0,0,0.35)] md:flex">
         {navItems.map((item) => {
           const Icon = item.icon;
+          const isActive = pathname === item.href;
+
           return (
             <button
               key={item.href}
               onClick={() => router.push(item.href)}
-              className="flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white transition-colors"
+              className={`flex items-center gap-2 rounded-xl px-3 py-1.5 text-sm font-medium tracking-wide transition-all duration-200 ${
+                isActive
+                  ? "bg-white/12 text-white"
+                  : "text-zinc-300 hover:bg-white/8 hover:text-white"
+              }`}
             >
               {Icon && <Icon className="h-4 w-4" />}
               <span>{item.label}</span>
@@ -76,7 +85,7 @@ const Navbar = (_props: Props) => {
           <DropdownMenuTrigger asChild>
             <Button
               variant="ghost"
-              className="relative h-8 w-8 rounded-full p-0 hover:bg-white/10"
+              className="relative h-9 w-9 rounded-full border border-white/15 bg-white/6 p-0 hover:bg-white/12"
             >
               <Avatar className="h-8 w-8">
                 <AvatarFallback className="bg-zinc-700 text-xs font-semibold text-white">
@@ -85,7 +94,10 @@ const Navbar = (_props: Props) => {
               </Avatar>
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-56">
+          <DropdownMenuContent
+            align="end"
+            className="w-56 border-white/10 bg-zinc-950/95 text-zinc-100 backdrop-blur-xl"
+          >
             <DropdownMenuLabel className="font-normal">
               <div className="flex flex-col space-y-1">
                 <p className="text-sm font-medium leading-none">{userName}</p>

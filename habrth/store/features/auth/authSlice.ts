@@ -5,6 +5,13 @@ type AuthUser = {
   name?: string;
   email?: string;
   dob?: string;
+  level: number;
+  xp: number;
+  streak: number;
+  discipline: number;
+  strength: number;
+  focus: number;
+  knowledge: number;
 };
 
 type AuthState = {
@@ -13,10 +20,38 @@ type AuthState = {
   loading: boolean;
 };
 
+type AuthUserPayload = Partial<AuthUser> | null;
+
 const initialState: AuthState = {
-  user: null,
+  user: {
+    level: 1,
+    xp: 0,
+    streak: 0,
+    discipline: 1,
+    strength: 1,
+    focus: 1,
+    knowledge: 1,
+  },
   token: null,
   loading: false,
+};
+
+const withDefaultStats = (user: Partial<AuthUser> | null): AuthUser | null => {
+  if (!user) return null;
+
+  return {
+    level: user.level ?? 1,
+    xp: user.xp ?? 0,
+    streak: user.streak ?? 0,
+    discipline: user.discipline ?? 1,
+    strength: user.strength ?? 1,
+    focus: user.focus ?? 1,
+    knowledge: user.knowledge ?? 1,
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+    dob: user.dob,
+  };
 };
 
 const authSlice = createSlice({
@@ -25,13 +60,13 @@ const authSlice = createSlice({
   reducers: {
     setCredentials: (
       state,
-      action: PayloadAction<{ user: AuthUser | null; token: string | null }>,
+      action: PayloadAction<{ user: AuthUserPayload; token: string | null }>,
     ) => {
-      state.user = action.payload.user;
+      state.user = withDefaultStats(action.payload.user);
       state.token = action.payload.token;
     },
-    setUser: (state, action: PayloadAction<AuthUser | null>) => {
-      state.user = action.payload;
+    setUser: (state, action: PayloadAction<AuthUserPayload>) => {
+      state.user = withDefaultStats(action.payload);
     },
     setToken: (state, action: PayloadAction<string | null>) => {
       state.token = action.payload;
@@ -40,7 +75,15 @@ const authSlice = createSlice({
       state.loading = action.payload;
     },
     clearAuth: (state) => {
-      state.user = null;
+      state.user = {
+        level: 1,
+        xp: 0,
+        streak: 0,
+        discipline: 1,
+        strength: 1,
+        focus: 1,
+        knowledge: 1,
+      };
       state.token = null;
       state.loading = false;
     },

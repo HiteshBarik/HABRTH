@@ -1,45 +1,55 @@
 "use client";
 
 import Link from "next/link";
+import { Brain, BookOpen, Dumbbell, Flame } from "lucide-react";
 import { useSelector } from "react-redux";
-import type { RootState } from "@/store/store";
 import DashboardLayout from "@/components/layout/DashboardLayout";
+import StatCard from "@/components/dashboard/StatCard";
+import WelcomeCard from "@/components/dashboard/WelcomeCard";
+import XPCard from "@/components/dashboard/XPCard";
+import type { RootState } from "@/store/store";
 
 export default function DashboardPage() {
   const user = useSelector((state: RootState) => state.auth.user);
 
   return (
     <DashboardLayout>
-      <div className="mx-auto flex min-h-[70vh] w-full max-w-4xl flex-col justify-center gap-6">
-        <div>
-          <p className="text-xs uppercase tracking-[0.35em] text-zinc-500">
-            HABRTH
-          </p>
-          <h1 className="mt-4 text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-            Welcome, {user?.name ?? "Initiate"}
-          </h1>
-          <p className="mt-3 text-zinc-400">
-            Level 1 Initiate · 0 XP · Discipline 1 · Focus 1 · Strength 1 ·
-            Knowledge 1
-          </p>
+      <div className="mx-auto w-full max-w-4xl">
+        <WelcomeCard />
+        <div className="mt-6">
+          <XPCard />
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2">
-          <section className="rounded-2xl border border-white/10 bg-white/5 p-5 shadow-xl shadow-black/20">
-            <p className="text-sm text-zinc-400">Profile</p>
-            <p className="mt-2 text-lg font-medium text-white">
-              {user?.email ?? "No account loaded"}
-            </p>
-          </section>
-          <section className="rounded-2xl border border-white/10 bg-white/5 p-5 shadow-xl shadow-black/20">
-            <p className="text-sm text-zinc-400">Status</p>
-            <p className="mt-2 text-lg font-medium text-white">Forge started</p>
-          </section>
+        <div className="mt-6 grid gap-4 sm:grid-cols-2">
+          <StatCard
+            title="Discipline"
+            value={user?.discipline ?? 1}
+            icon={Flame}
+            description="Consistency"
+          />
+          <StatCard
+            title="Strength"
+            value={user?.strength ?? 1}
+            icon={Dumbbell}
+            description="Fitness"
+          />
+          <StatCard
+            title="Focus"
+            value={user?.focus ?? 1}
+            icon={Brain}
+            description="Deep work"
+          />
+          <StatCard
+            title="Knowledge"
+            value={user?.knowledge ?? 1}
+            icon={BookOpen}
+            description="Learning"
+          />
         </div>
 
         <Link
           href="/"
-          className="text-sm text-zinc-300 underline underline-offset-4"
+          className="inline-block pb-8 text-sm text-zinc-300 underline underline-offset-4 mt-3"
         >
           Return home
         </Link>

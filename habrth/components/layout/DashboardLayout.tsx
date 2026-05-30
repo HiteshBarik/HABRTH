@@ -12,11 +12,11 @@ function DashboardContent({ children }: React.PropsWithChildren) {
 
   return (
     <div
-      className="flex flex-col min-h-screen transition-[margin] duration-200 ease-linear"
-      style={{ marginLeft: open ? "11.2rem" : "0" }}
+      className="flex h-svh flex-col overflow-hidden pt-16 transition-[margin] duration-200 ease-linear"
+      style={{ marginLeft: open ? "13.2rem" : "0" }}
     >
       <Navbar />
-      <main className="flex-1 overflow-y-auto px-4 py-6 md:px-8 mt-16">
+      <main className="min-h-0 flex-1 overflow-y-auto px-4 py-6 md:px-8">
         {children}
       </main>
     </div>

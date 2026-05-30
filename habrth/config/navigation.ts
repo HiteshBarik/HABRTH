@@ -1,4 +1,11 @@
-import { LucideIcon, Home, Zap, User } from "lucide-react";
+import {
+  LucideIcon,
+  Home,
+  Zap,
+  ScrollText,
+  BarChart3,
+  Settings,
+} from "lucide-react";
 
 export interface NavItem {
   label: string;
@@ -14,12 +21,22 @@ export const navItems: NavItem[] = [
   },
   {
     label: "Habits",
-    href: "/habits",
+    href: "/dashboard/habits",
     icon: Zap,
   },
   {
-    label: "Profile",
-    href: "/profile",
-    icon: User,
+    label: "Quests",
+    href: "/dashboard/quests",
+    icon: ScrollText,
+  },
+  {
+    label: "Analytics",
+    href: "/dashboard/analytics",
+    icon: BarChart3,
+  },
+  {
+    label: "Settings",
+    href: "/dashboard/settings",
+    icon: Settings,
   },
 ];
