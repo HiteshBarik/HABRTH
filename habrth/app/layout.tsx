@@ -31,7 +31,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
     >
       <body className="min-h-full flex flex-col text-white">
-        <main
+        <div
           className="min-h-full"
           style={{
             backgroundImage:
@@ -41,7 +41,7 @@ export default function RootLayout({
           <TooltipProvider>
             <ReduxProvider>{children}</ReduxProvider>
           </TooltipProvider>
-        </main>
+        </div>
       </body>
     </html>
   );
