@@ -88,15 +88,7 @@ const authSlice = createSlice({
       state.loading = action.payload;
     },
     clearAuth: (state) => {
-      state.user = {
-        level: 1,
-        xp: 0,
-        streak: 0,
-        discipline: 1,
-        strength: 1,
-        focus: 1,
-        knowledge: 1,
-      };
+      state.user = null;
       state.token = null;
       state.loading = false;
     },
