@@ -1,48 +1,82 @@
 "use client";
 
-import Link from "next/link";
+import {
+  Activity,
+  BookOpen,
+  Dumbbell,
+  Eye,
+  Flame,
+  ScrollText,
+  Shield,
+} from "lucide-react";
 import { useSelector } from "react-redux";
-import type { RootState } from "@/store/store";
 import DashboardLayout from "@/components/layout/DashboardLayout";
+import WelcomeCard from "@/components/dashboard/WelcomeCard";
+import KeyStatCard from "@/components/dashboard/KeyStatCard";
+import XPProgressCard from "@/components/dashboard/XPProgressCard";
+import AttributeCard from "@/components/dashboard/AttributeCard";
+import EmptyStateCard from "@/components/dashboard/EmptyStateCard";
+import type { RootState } from "@/store/store";
 
 export default function DashboardPage() {
-  const user = useSelector((state: RootState) => state.auth.user);
+  const authUser = useSelector((state: RootState) => state.auth.user);
+  const rpgUser = useSelector((state: RootState) => state.user);
+  const displayName = authUser?.name?.trim() || rpgUser.profile.name;
 
   return (
     <DashboardLayout>
-      <div className="mx-auto flex min-h-[70vh] w-full max-w-4xl flex-col justify-center gap-6">
-        <div>
-          <p className="text-xs uppercase tracking-[0.35em] text-zinc-500">
-            HABRTH
-          </p>
-          <h1 className="mt-4 text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-            Welcome, {user?.name ?? "Initiate"}
-          </h1>
-          <p className="mt-3 text-zinc-400">
-            Level 1 Initiate · 0 XP · Discipline 1 · Focus 1 · Strength 1 ·
-            Knowledge 1
-          </p>
-        </div>
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-6">
+        <WelcomeCard />
 
-        <div className="grid gap-4 sm:grid-cols-2">
-          <section className="rounded-2xl border border-white/10 bg-white/5 p-5 shadow-xl shadow-black/20">
-            <p className="text-sm text-zinc-400">Profile</p>
-            <p className="mt-2 text-lg font-medium text-white">
-              {user?.email ?? "No account loaded"}
-            </p>
-          </section>
-          <section className="rounded-2xl border border-white/10 bg-white/5 p-5 shadow-xl shadow-black/20">
-            <p className="text-sm text-zinc-400">Status</p>
-            <p className="mt-2 text-lg font-medium text-white">Forge started</p>
-          </section>
-        </div>
+        <section className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+          <XPProgressCard />
+          <KeyStatCard
+            title="Streak"
+            value={`${rpgUser.progression.streak} Days`}
+            subtitle="Consistency chain"
+            icon={Flame}
+          />
+        </section>
 
-        <Link
-          href="/"
-          className="text-sm text-zinc-300 underline underline-offset-4"
-        >
-          Return home
-        </Link>
+        <section className="grid gap-4 sm:grid-cols-2">
+          <AttributeCard
+            attribute="Discipline"
+            value={rpgUser.attributes.discipline}
+            icon={Shield}
+            description="Consistency & Habits"
+          />
+          <AttributeCard
+            attribute="Strength"
+            value={rpgUser.attributes.strength}
+            icon={Dumbbell}
+            description="Physical Growth"
+          />
+          <AttributeCard
+            attribute="Focus"
+            value={rpgUser.attributes.focus}
+            icon={Eye}
+            description="Deep Work"
+          />
+          <AttributeCard
+            attribute="Knowledge"
+            value={rpgUser.attributes.knowledge}
+            icon={BookOpen}
+            description="Learning & Skill"
+          />
+        </section>
+
+        <section className="grid gap-4 lg:grid-cols-2">
+          <EmptyStateCard
+            title="Recent Activity"
+            description={`No activities yet for ${displayName}. Complete your first habit to begin.`}
+            icon={Activity}
+          />
+          <EmptyStateCard
+            title="Active Quests"
+            description="Quests unlock in Module 5. This section is ready for future content."
+            icon={ScrollText}
+          />
+        </section>
       </div>
     </DashboardLayout>
   );
