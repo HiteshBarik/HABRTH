@@ -2,7 +2,7 @@
 
 import React from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { SidebarTrigger } from "../ui/sidebar";
 import { Button } from "../ui/button";
 import { Avatar, AvatarFallback } from "../ui/avatar";
@@ -16,11 +16,13 @@ import {
 } from "../ui/dropdown-menu";
 import { Flame, LogOut, Settings, User } from "lucide-react";
 import { navItems } from "@/config/navigation";
-import type { RootState } from "@/store/store";
+import type { AppDispatch, RootState } from "@/store/store";
+import { clearAuth } from "@/store/features/auth/authSlice";
 
 const Navbar = () => {
   const router = useRouter();
   const pathname = usePathname();
+  const dispatch = useDispatch<AppDispatch>();
   const authUser = useSelector((state: RootState) => state.auth.user);
   const rpgUser = useSelector((state: RootState) => state.user);
 
@@ -40,10 +42,16 @@ const Navbar = () => {
     return `${parts[0][0]}${parts[parts.length - 1][0]}`.toUpperCase();
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/auth/logout", { method: "POST" });
+    } catch {
+      // proceed with client-side logout even if the server request fails
+    }
     localStorage.removeItem("authToken");
     localStorage.removeItem("authUser");
-    window.location.replace("/login");
+    dispatch(clearAuth());
+    router.replace("/login");
   };
 
   return (
