@@ -32,6 +32,13 @@ export async function POST(request: Request) {
     const normalizedName = String(name).trim();
     const normalizedDob = dob ? new Date(dob) : undefined;
 
+    if (!normalizedName || !normalizedEmail || !password) {
+      return NextResponse.json(
+        { success: false, message: "Name, email, and password are required" },
+        { status: 400 },
+      );
+    }
+
     if (dob && Number.isNaN(normalizedDob?.getTime())) {
       return NextResponse.json(
         { success: false, message: "Date of birth is invalid" },
