@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import { SidebarTrigger } from "../ui/sidebar";
 import { Button } from "../ui/button";
+import { Avatar, AvatarFallback } from "../ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,20 +14,22 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { Avatar, AvatarFallback } from "../ui/avatar";
-import { LogOut, Settings, User } from "lucide-react";
+import { Flame, LogOut, Settings, User } from "lucide-react";
 import { navItems } from "@/config/navigation";
 import type { RootState } from "@/store/store";
 
-type Props = {};
-
-const Navbar = (_props: Props) => {
+const Navbar = () => {
   const router = useRouter();
   const pathname = usePathname();
-  const user = useSelector((state: RootState) => state.auth.user);
+  const authUser = useSelector((state: RootState) => state.auth.user);
+  const rpgUser = useSelector((state: RootState) => state.user);
 
-  const userName = user?.name?.trim() || "User Name";
-  const userEmail = user?.email?.trim() || "user@example.com";
+  const userName =
+    authUser?.name?.trim() || rpgUser.profile.name || "User Name";
+  const currentPage =
+    navItems.find(
+      (item) => pathname === item.href || pathname.startsWith(`${item.href}/`),
+    )?.label ?? "Dashboard";
 
   const getInitials = (fullName: string) => {
     const parts = fullName.trim().split(/\s+/).filter(Boolean);
@@ -38,7 +41,6 @@ const Navbar = (_props: Props) => {
   };
 
   const handleLogout = () => {
-    // Clear persisted auth data and force a full reload so in-memory auth state is reset
     localStorage.removeItem("authToken");
     localStorage.removeItem("authUser");
     window.location.replace("/login");
@@ -48,7 +50,6 @@ const Navbar = (_props: Props) => {
     <header className="fixed top-0 left-0 right-0 z-30 flex h-16 items-center justify-between border-b border-white/10 bg-[linear-gradient(180deg,rgba(12,12,12,0.82)_0%,rgba(5,5,5,0.64)_100%)] px-3 backdrop-blur-2xl md:px-6">
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-linear-to-r from-transparent via-white/30 to-transparent" />
 
-      {/* Left side - Sidebar trigger (mobile) and logo */}
       <div className="flex items-center gap-4">
         <SidebarTrigger className="text-white hover:bg-white/10 md:hidden" />
         <p className="text-xs font-medium tracking-[0.3em] text-zinc-200 uppercase">
@@ -56,7 +57,6 @@ const Navbar = (_props: Props) => {
         </p>
       </div>
 
-      {/* Center - Menu items (desktop only) */}
       <div className="hidden items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-2 py-1.5 shadow-[0_12px_48px_rgba(0,0,0,0.35)] md:flex">
         {navItems.map((item) => {
           const Icon = item.icon;
@@ -79,8 +79,14 @@ const Navbar = (_props: Props) => {
         })}
       </div>
 
-      {/* Right side - User menu */}
       <div className="flex items-center gap-4">
+        <div className="hidden items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm text-zinc-200 sm:flex">
+          <Flame className="h-4 w-4 text-orange-300" />
+          <span>{rpgUser.progression.xp} XP</span>
+        </div>
+        <div className="hidden rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm text-zinc-200 sm:block">
+          Level {rpgUser.progression.level}
+        </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
@@ -102,7 +108,7 @@ const Navbar = (_props: Props) => {
               <div className="flex flex-col space-y-1">
                 <p className="text-sm font-medium leading-none">{userName}</p>
                 <p className="text-xs leading-none text-muted-foreground">
-                  {userEmail}
+                  {authUser?.email?.trim() || "user@example.com"}
                 </p>
               </div>
             </DropdownMenuLabel>

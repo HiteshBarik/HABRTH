@@ -1,8 +1,8 @@
 import {
   LucideIcon,
-  Home,
-  Zap,
-  ScrollText,
+  LayoutDashboard,
+  Target,
+  Sword,
   BarChart3,
   Settings,
 } from "lucide-react";
@@ -17,17 +17,17 @@ export const navItems: NavItem[] = [
   {
     label: "Dashboard",
     href: "/dashboard",
-    icon: Home,
+    icon: LayoutDashboard,
   },
   {
     label: "Habits",
     href: "/dashboard/habits",
-    icon: Zap,
+    icon: Target,
   },
   {
     label: "Quests",
     href: "/dashboard/quests",
-    icon: ScrollText,
+    icon: Sword,
   },
   {
     label: "Analytics",

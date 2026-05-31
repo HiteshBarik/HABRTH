@@ -5,8 +5,6 @@ import AppSidebar from "./AppSidebar";
 import Navbar from "./Navbar";
 import { SidebarProvider, useSidebar } from "../ui/sidebar";
 
-type Props = {};
-
 function DashboardContent({ children }: React.PropsWithChildren) {
   const { open } = useSidebar();
 
@@ -23,7 +21,7 @@ function DashboardContent({ children }: React.PropsWithChildren) {
   );
 }
 
-const DashboardLayout = ({ children }: React.PropsWithChildren<Props>) => {
+const DashboardLayout = ({ children }: React.PropsWithChildren) => {
   return (
     <SidebarProvider defaultOpen={false}>
       <AppSidebar />

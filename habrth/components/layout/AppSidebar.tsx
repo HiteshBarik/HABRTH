@@ -12,16 +12,13 @@ import {
 } from "../ui/sidebar";
 import { navItems } from "@/config/navigation";
 
-type Props = {};
-
-const AppSidebar = (_props: Props) => {
+const AppSidebar = () => {
   const pathname = usePathname();
 
   return (
     <Sidebar
       collapsible="offcanvas"
       variant="sidebar"
-      style={{ "--sidebar-width": "13.2rem" } as React.CSSProperties}
       className="border-r border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.07)_0%,rgba(255,255,255,0.02)_22%,rgba(0,0,0,0.55)_100%)] backdrop-blur-2xl"
     >
       <SidebarHeader className="border-b border-white/10 px-4 py-4">

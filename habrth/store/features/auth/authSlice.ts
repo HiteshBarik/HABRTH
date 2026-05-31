@@ -12,6 +12,12 @@ type AuthUser = {
   strength: number;
   focus: number;
   knowledge: number;
+  stats?: {
+    discipline?: number;
+    strength?: number;
+    focus?: number;
+    knowledge?: number;
+  };
 };
 
 type AuthState = {
@@ -38,19 +44,26 @@ const initialState: AuthState = {
 
 const withDefaultStats = (user: Partial<AuthUser> | null): AuthUser | null => {
   if (!user) return null;
+  const stats = user.stats;
 
   return {
     level: user.level ?? 1,
     xp: user.xp ?? 0,
     streak: user.streak ?? 0,
-    discipline: user.discipline ?? 1,
-    strength: user.strength ?? 1,
-    focus: user.focus ?? 1,
-    knowledge: user.knowledge ?? 1,
+    discipline: user.discipline ?? stats?.discipline ?? 1,
+    strength: user.strength ?? stats?.strength ?? 1,
+    focus: user.focus ?? stats?.focus ?? 1,
+    knowledge: user.knowledge ?? stats?.knowledge ?? 1,
     _id: user._id,
     name: user.name,
     email: user.email,
     dob: user.dob,
+    stats: {
+      discipline: stats?.discipline ?? user.discipline ?? 1,
+      strength: stats?.strength ?? user.strength ?? 1,
+      focus: stats?.focus ?? user.focus ?? 1,
+      knowledge: stats?.knowledge ?? user.knowledge ?? 1,
+    },
   };
 };
 
