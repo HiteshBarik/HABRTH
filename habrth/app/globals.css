@@ -128,3 +128,22 @@
     @apply font-sans;
   }
 }
+
+@layer components {
+  .premium-auth-cta {
+    @apply relative overflow-hidden border border-white/20 bg-linear-to-b from-white/16 to-white/6 text-zinc-100 backdrop-blur-xl transition-all duration-300 hover:scale-[1.005] hover:border-white/30 hover:from-white/20 hover:to-white/8;
+    box-shadow:
+      0 20px 56px rgba(0, 0, 0, 0.45),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.08);
+  }
+
+  .premium-auth-type {
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+    letter-spacing: 0.04em;
+  }
+
+  .premium-auth-link {
+    @apply inline-flex items-center text-base text-zinc-200/95 underline decoration-white/35 underline-offset-6 transition-all duration-200 hover:text-white hover:decoration-white/70;
+  }
+}
