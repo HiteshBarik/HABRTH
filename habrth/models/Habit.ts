@@ -43,17 +43,9 @@ const HabitSchema = new Schema(
             type: Boolean,
             default: false,
         },
-        updatedAt: {
-            type: Date,
-            default: Date.now,
-        },
         lastCompletedAt: {
             type: Date,
             default: null,
-        },
-        createdAt: {
-            type: Date,
-            default: Date.now,
         },
     },
     {
