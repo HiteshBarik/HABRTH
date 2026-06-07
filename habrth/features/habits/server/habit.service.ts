@@ -14,8 +14,8 @@ export const habitService = {
     return habitRepository.findByUserId(userId);
   },
 
-  async getHabit(id: string): Promise<Habit | null> {
-    return habitRepository.findById(id);
+  async getHabit(id: string, userId: string): Promise<Habit | null> {
+    return habitRepository.findById(id, userId);
   },
 
   async createHabit(input: CreateHabitInput): Promise<Habit> {
@@ -23,9 +23,9 @@ export const habitService = {
     return habitRepository.create(parsed);
   },
 
-  async updateHabit(id: string, input: UpdateHabitInput): Promise<Habit> {
+  async updateHabit(id: string, userId: string, input: UpdateHabitInput): Promise<Habit> {
     const parsed = updateHabitSchema.parse(input);
-    const updatedHabit = await habitRepository.update(id, parsed);
+    const updatedHabit = await habitRepository.update(id, userId, parsed);
 
     if (!updatedHabit) {
       throw new Error("Habit not found");
@@ -34,8 +34,8 @@ export const habitService = {
     return updatedHabit;
   },
 
-  async deleteHabit(id: string): Promise<boolean> {
-    return habitRepository.delete(id);
+  async deleteHabit(id: string, userId: string): Promise<boolean> {
+    return habitRepository.delete(id, userId);
   },
 
   async completeHabit(id: string, userId: string): Promise<Habit> {

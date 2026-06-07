@@ -51,10 +51,10 @@ export const habitRepository = {
     return habits.map(mapHabit);
   },
 
-  async findById(id: string): Promise<Habit | null> {
+  async findById(id: string, userId: string): Promise<Habit | null> {
     await connectToMongoDb();
 
-    const habit = (await HabitModel.findById(id).lean()) as HabitDoc | null;
+    const habit = (await HabitModel.findOne({ _id: id, userId }).lean()) as HabitDoc | null;
     return habit ? mapHabit(habit) : null;
   },
 
@@ -76,11 +76,15 @@ export const habitRepository = {
     return mapHabit(created);
   },
 
-  async update(id: string, input: UpdateHabitInput): Promise<Habit | null> {
+  async update(
+    id: string,
+    userId: string,
+    input: UpdateHabitInput,
+  ): Promise<Habit | null> {
     await connectToMongoDb();
 
-    const updated = (await HabitModel.findByIdAndUpdate(
-      id,
+    const updated = (await HabitModel.findOneAndUpdate(
+      { _id: id, userId },
       {
         ...(input.title !== undefined && { title: input.title }),
         ...(input.description !== undefined && {
@@ -99,10 +103,10 @@ export const habitRepository = {
     return updated ? mapHabit(updated) : null;
   },
 
-  async delete(id: string): Promise<boolean> {
+  async delete(id: string, userId: string): Promise<boolean> {
     await connectToMongoDb();
 
-    const deleted = await HabitModel.findByIdAndDelete(id);
+    const deleted = await HabitModel.findOneAndDelete({ _id: id, userId });
     return Boolean(deleted);
   },
 
