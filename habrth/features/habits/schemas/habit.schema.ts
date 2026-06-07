@@ -25,7 +25,7 @@ export const createHabitSchema = z.object({
 
 export const updateHabitSchema = z.object({
   title: z.string().min(1).optional(),
-  description: z.string().optional(),
+  description: z.string().nullable().optional(),
   category: habitCategorySchema.optional(),
   difficulty: habitDifficultySchema.optional(),
   xpReward: z.number().int().min(0).optional(),
