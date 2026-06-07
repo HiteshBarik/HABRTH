@@ -9,6 +9,8 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@apollo/client": "^3.14.0",
+    "@apollo/server": "^4.11.3",
     "@reduxjs/toolkit": "^2.11.0",
     "bcrypt": "^6.0.0",
     "class-variance-authority": "^0.7.1",

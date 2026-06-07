@@ -10,9 +10,7 @@ function DashboardContent({ children }: React.PropsWithChildren) {
 
   return (
     <div
-      className="flex h-svh flex-col overflow-hidden pt-16 transition-[margin] duration-200 ease-linear"
-      style={{ marginLeft: open ? "13.2rem" : "0" }}
-    >
+      className="flex h-svh flex-col overflow-hidden pt-16">
       <Navbar />
       <main className="min-h-0 flex-1 overflow-y-auto px-4 py-6 md:px-8">
         {children}
@@ -21,7 +19,7 @@ function DashboardContent({ children }: React.PropsWithChildren) {
   );
 }
 
-const DashboardLayout = ({ children }: React.PropsWithChildren) => {
+const AppLayout = ({ children }: React.PropsWithChildren) => {
   return (
     <SidebarProvider defaultOpen={false}>
       <AppSidebar />
@@ -30,4 +28,4 @@ const DashboardLayout = ({ children }: React.PropsWithChildren) => {
   );
 };
 
-export default DashboardLayout;
+export default AppLayout;

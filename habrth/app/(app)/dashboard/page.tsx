@@ -10,7 +10,6 @@ import {
   Shield,
 } from "lucide-react";
 import { useSelector } from "react-redux";
-import DashboardLayout from "@/components/layout/DashboardLayout";
 import WelcomeCard from "@/components/dashboard/WelcomeCard";
 import KeyStatCard from "@/components/dashboard/KeyStatCard";
 import XPProgressCard from "@/components/dashboard/XPProgressCard";
@@ -24,8 +23,7 @@ export default function DashboardPage() {
   const displayName = authUser?.name?.trim() || rpgUser.profile.name;
 
   return (
-    <DashboardLayout>
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-6">
+    <div className="mx-auto flex w-full max-w-6xl flex-col gap-6">
         <WelcomeCard />
 
         <section className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
@@ -78,6 +76,5 @@ export default function DashboardPage() {
           />
         </section>
       </div>
-    </DashboardLayout>
   );
 }

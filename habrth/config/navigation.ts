@@ -21,22 +21,22 @@ export const navItems: NavItem[] = [
   },
   {
     label: "Habits",
-    href: "/dashboard/habits",
+    href: "/habits",
     icon: Target,
   },
   {
     label: "Quests",
-    href: "/dashboard/quests",
+    href: "/quests",
     icon: Sword,
   },
   {
     label: "Analytics",
-    href: "/dashboard/analytics",
+    href: "/analytics",
     icon: BarChart3,
   },
   {
     label: "Settings",
-    href: "/dashboard/settings",
+    href: "/settings",
     icon: Settings,
   },
 ];
