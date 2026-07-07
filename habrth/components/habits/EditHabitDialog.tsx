@@ -111,9 +111,8 @@ export function EditHabitDialog({ habit, onSubmit }: EditHabitDialogProps) {
         variables: {
           id: habit.id,
           title: parsed.data.title,
-          description: parsed.data.description ?? undefined,
+          description: parsed.data.description || undefined,
           category: parsed.data.category,
-          difficulty: parsed.data.difficulty,
           xpReward: parsed.data.xpReward,
           frequency: parsed.data.frequency,
         },
