@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import ReduxProvider from "@/components/ReduxProvider";
+import AppProviders from "@/components/AppProviders";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
 const geistSans = Geist({
@@ -39,7 +39,7 @@ export default function RootLayout({
           }}
         >
           <TooltipProvider>
-            <ReduxProvider>{children}</ReduxProvider>
+            <AppProviders>{children}</AppProviders>
           </TooltipProvider>
         </div>
       </body>
