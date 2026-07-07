@@ -5,7 +5,7 @@ import { Provider } from "react-redux";
 import { apolloClient } from "@/lib/apollo-client";
 import { store } from "@/store/store";
 
-export default function ReduxProvider({
+export default function AppProviders({
   children,
 }: {
   children: React.ReactNode;
